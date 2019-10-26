@@ -1,0 +1,1 @@
+go build -o my-server-go main.go
