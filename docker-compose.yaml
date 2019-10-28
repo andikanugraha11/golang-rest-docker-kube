@@ -1,0 +1,8 @@
+version: "2.3"
+
+services:
+  go-service:
+    container_name: go-service
+    image: andikanugraha/golang-rest:latest
+    ports:
+      - 8080:8080
