@@ -12,7 +12,7 @@ COPY . .
 
 RUN go build -o my-go-server main.go
 
-## Distribution
+# Distribution
 FROM alpine:latest
 
 RUN apk update && apk upgrade && \
