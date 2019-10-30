@@ -8,24 +8,21 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"log"
-	"net/http"
+	"os"
 )
 
 var conf config.AppConfig
-
-func homePage(c echo.Context) error {
-
-	res := "Helloworld"
-	return c.JSON(http.StatusOK, res)
-}
 
 func handleRequest(){
 	log.Println("Starting server at 8080")
 	e := echo.New()
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "[${status}] - ${method}  uri=${uri}\n",
+		Format: "[${status}]-${method}-${uri}\n",
 	}))
-	e.GET("/", homePage)
+
+	// Register Router
+	UserRouter(e)
+
 	e.Start(":8080")
 }
 
@@ -48,6 +45,14 @@ func main() {
 		log.Panicf("Fail connect to database : %v", err)
 	}
 	defer db.Close()
+
+	// Get all parameter on running app
+	if len(os.Args) > 1 {
+		commandParams := os.Args[1]
+		if commandParams == "migrate" {
+			MigrateDB(db)
+		}
+	}
 
 	handleRequest()
 }

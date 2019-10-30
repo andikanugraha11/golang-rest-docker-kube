@@ -4,4 +4,4 @@ export DB_USER=postgres
 export DB_PASSWORD=postgres
 export DB_MAX_CON=80
 
-go run main.go
+go run . $1
