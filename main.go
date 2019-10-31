@@ -13,7 +13,7 @@ import (
 
 var conf config.AppConfig
 
-func handleRequest(){
+func handleRequest(db *gorm.DB){
 	log.Println("Starting server at 8080")
 	e := echo.New()
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -21,7 +21,7 @@ func handleRequest(){
 	}))
 
 	// Register Router
-	UserRouter(e)
+	UserRouter(e, db)
 
 	e.Start(":8080")
 }
@@ -54,5 +54,5 @@ func main() {
 		}
 	}
 
-	handleRequest()
+	handleRequest(db)
 }
